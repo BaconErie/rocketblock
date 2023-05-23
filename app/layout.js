@@ -1,3 +1,11 @@
+import './global.css';
+import { Open_Sans } from 'next/font/google'
+
+const openSans = Open_Sans({
+  weight: '600',
+  subsets: [ 'latin' ]
+})
+
 export const metadata = {
   title: 'RocketBlock'
 }
@@ -5,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
  return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={openSans.className}>{children}</body>
     </html>
   )
 }
