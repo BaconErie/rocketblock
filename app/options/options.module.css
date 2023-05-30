@@ -1,3 +1,31 @@
 .yellow {
-    color: #F9D83F;
+    color: #f9d83f;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.ul {
+    margin: 0px;
+}
+
+
+
+.inputWrapper {
+    all: initial;
+    padding: 0px;
+
+    display: flex;
+    column-gap: 1rem;
+}
+
+.inputBox {
+    flex-grow: 1;
+}
+
+.inputButton {
+    width: 10rem;
 }
