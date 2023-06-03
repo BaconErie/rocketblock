@@ -1,9 +1,10 @@
-'use client'
+'use client'; // Allows us to use event handlers. Doesn't matter if it's client or server components, this is all going to compiled to client anyway
 
 import styles from './options.module.css';
 import { Open_Sans } from 'next/font/google';
 
 import PrimaryButton from '../../components/PrimaryButton/PrimaryButton';
+import WebsiteDisplay from '../../components/WebsiteDisplay/WebsiteDisplay';
 
 const openSans = Open_Sans({
   weight: '500',
@@ -17,7 +18,7 @@ export default function OptionsPage() {
       <h1><span className={styles.yellow}>RocketBlock</span> Settings</h1>
     </div>
 
-    <div>
+    <div className={styles.content}>
       <h1>Ignore list</h1>
 
       <br />
@@ -34,6 +35,13 @@ export default function OptionsPage() {
           <li>Remove the http part to block the entire domain/website</li>
           <li>Use * as a placeholder/wildcard</li>
       </ul>
+
+      <div className={styles.websiteList}>
+        <WebsiteDisplay website={"https://www.google.com"} />
+        <WebsiteDisplay website={"https://www.wikipedia.com"} />
+        <WebsiteDisplay website={"https://www.mit.edu"} />
+        <WebsiteDisplay website={"https://www.virginia.edu"} />
+      </div>
     </div>
   </main></>)
 }

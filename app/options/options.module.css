@@ -12,7 +12,32 @@
     margin: 0px;
 }
 
+.websiteList {
+    display: flex;
+    flex-direction: column;
 
+    padding: 0px;
+    border-radius: 10px;
+    background-color: #272727;
+
+    box-sizing: border-box;
+    border: solid;
+    border-width: 1px;
+    border-color: #999999;
+
+    color: #ffffff;
+    
+    box-shadow: none;
+
+    margin-top: 1rem;
+    
+    flex-grow: 1;
+
+    min-height: 12rem;
+    overflow: clip;
+
+    row-gap: 0px;
+}
 
 .inputWrapper {
     all: initial;
