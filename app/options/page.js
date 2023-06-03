@@ -66,7 +66,7 @@ export default function OptionsPage() {
     const ignoreInput = document.getElementById('ignoreInput');
     const websiteToIgnore = ignoreInput.value;
 
-    if (!websiteToIgnore || websiteToIgnore.length <= 0) {
+    if (!websiteToIgnore || websiteToIgnore.length <= 0 || ignoreDisplay.includes(websiteToIgnore)) {
       return;
     }
 
