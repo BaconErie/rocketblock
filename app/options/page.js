@@ -92,7 +92,7 @@ export default function OptionsPage() {
       <br />
       
       <div className={styles.inputWrapper}>
-        <input id="ignoreInput" className={styles.inputBox} style={openSans.style} type="text" placeholder="Add a website to ignore" />
+        <input id="ignoreInput" className={styles.inputBox} style={openSans.style} type="text" placeholder="Add a website to ignore" onKeyUp={(e) => {if(e.key == 'Enter'){handleIgnoreButton(e)}}}/>
 
         <PrimaryButton onClick={handleIgnoreButton}>Ignore</PrimaryButton>
       </div>
