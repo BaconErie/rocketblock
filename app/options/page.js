@@ -66,6 +66,10 @@ export default function OptionsPage() {
     const ignoreInput = document.getElementById('ignoreInput');
     const websiteToIgnore = ignoreInput.value;
 
+    if (!websiteToIgnore || websiteToIgnore.length <= 0) {
+      return;
+    }
+
     //TODO: ACTUALLY SAVE THE WEBSITES THAT ARE ADDED
     
     setIgnoreDisplay(ignoreDisplay.concat(websiteToIgnore));
