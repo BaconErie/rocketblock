@@ -54,3 +54,22 @@
 .inputButton {
     width: 10rem;
 }
+
+.number {
+    display: inline-block;
+    margin: 0px;
+    max-width: 3rem;
+}
+
+/* Remove the arrows from the number box */
+.number::-webkit-outer-spin-button,
+.number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.number[type=number] {
+  -moz-appearance: textfield;
+  text-align: center;
+}
