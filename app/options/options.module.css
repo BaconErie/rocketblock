@@ -39,6 +39,11 @@
     row-gap: 0px;
 }
 
+.blankList {
+    padding-top: 3rem;
+    text-align: center;
+}
+
 .inputWrapper {
     all: initial;
     padding: 0px;

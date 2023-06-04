@@ -7,7 +7,6 @@ import { Open_Sans } from 'next/font/google';
 
 import PrimaryButton from '../../components/PrimaryButton/PrimaryButton';
 import WebsiteDisplay from '../../components/WebsiteDisplay/WebsiteDisplay';
-import { devIndicators } from '@/next.config';
 
 const openSans = Open_Sans({
   weight: '500',
@@ -40,6 +39,14 @@ function WebsiteList({ ignoreDisplay, setIgnoreDisplay }) {
     }
 
     setIgnoreDisplay(newIgnoreDisplay);
+  }
+
+  if (ignoreDisplay.length == 0) {
+    return (<>
+      <div className={`${styles.websiteList} ${styles.blankList}`}>
+        No websites to ignore added
+      </div>
+    </>)
   }
 
   const listItems = ignoreDisplay.map(website =>
