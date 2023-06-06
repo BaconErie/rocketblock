@@ -1,6 +1,6 @@
 'use client'; // Allows us to use event handlers. Doesn't matter if it's client or server components, this is all going to compiled to client anyway
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import styles from './options.module.css';
 import { Open_Sans } from 'next/font/google';
@@ -12,6 +12,8 @@ const openSans = Open_Sans({
   weight: '500',
   subsets: [ 'latin' ]
 })
+
+let debounce = false;
 
 function getTimeFromSeconds(totalSeconds) {
   const hours = ( totalSeconds - (totalSeconds % 3600) ) / 3600;
@@ -34,7 +36,6 @@ function WebsiteList({ ignoreDisplay, setIgnoreDisplay, isBlocking }) {
       }
     }
 
-    //TODO: ACTUALLY REMOVE THE WEBSITE FROM THE IGNORE LIST
     let newIgnoreDisplay = [...ignoreDisplay];
     const index = newIgnoreDisplay.indexOf(website);
     if (index > -1) { 
@@ -42,6 +43,8 @@ function WebsiteList({ ignoreDisplay, setIgnoreDisplay, isBlocking }) {
     }
 
     setIgnoreDisplay(newIgnoreDisplay);
+
+    chrome.storage.local.set({'ignoreList': ignoreDisplay});
   }
 
   if (ignoreDisplay.length == 0) {
@@ -63,7 +66,11 @@ function WebsiteList({ ignoreDisplay, setIgnoreDisplay, isBlocking }) {
   </>);
 }
 
-function BlockingDiv({ isBlocking, setIsBlocking,  }) {
+
+
+
+function BlockingDiv({ isBlocking, setIsBlocking, blockTimeLeft, setBlockTimeLeft }) {
+
   function handleStartBlocking() {
     if (isBlocking) {
       alert('Already blocking!');
@@ -91,12 +98,15 @@ function BlockingDiv({ isBlocking, setIsBlocking,  }) {
     const reallyBlock = confirm(`Begin blocking for ${hours} hours, ${minutes} minutes, and ${seconds} seconds?\nYou won't be able to access any page EXCEPT for those on the ignore list, and you won't be able to add anything to the ignore list!`);
 
     if (reallyBlock) {
-      //TODO: ACTUALLY START BLOCKING
+      setBlockTimeLeft(totalSeconds);
       setIsBlocking(true);
+
+      chrome.storage.local.set({'blockTimeLeft': blockTimeLeft});
+      chrome.storage.local.set({'isBlocking': isBlocking});
+
       alert('Blocking has started!')
     }
   }
-
 
   if (!isBlocking) {
     return (<>
@@ -110,7 +120,7 @@ function BlockingDiv({ isBlocking, setIsBlocking,  }) {
       </div>
     </>)
   } else {
-    let [ hours, minutes, seconds ] = getTimeFromSeconds(69420)
+    let [ hours, minutes, seconds ] = getTimeFromSeconds(blockTimeLeft);
 
     return (<>
       <div>
@@ -125,9 +135,40 @@ function BlockingDiv({ isBlocking, setIsBlocking,  }) {
   }
 }
 
+
+
+
 export default function OptionsPage() {
   const [ignoreDisplay, setIgnoreDisplay] = useState([]);
-  const [ isBlocking, setIsBlocking ] = useState(false); //TODO: SET THE ACTUAL STATE BEFORE LOOAD
+  const [ isBlocking, setIsBlocking ] = useState(false);
+  const [ blockTimeLeft, setBlockTimeLeft ] = useState(0);
+  const [ debounce, setDebounce ] = useState(false);
+
+  useEffect(() => {
+    if (!debounce) {
+      // Set whether or not it is blocking
+      chrome.storage.local.get(['isBlocking']).then((result) => {
+        setIsBlocking(result.isBlocking);
+      });
+
+      // Set block time left
+      chrome.storage.local.get(['blockTimeLeft']).then((result) => {
+        setBlockTimeLeft(result.blockTimeLeft)
+      });
+
+      // Set ignoreDisplay
+      chrome.storage.local.get(['ignoreList']).then((result) => {
+        setIgnoreDisplay(result.ignoreList);
+      });
+
+      setInterval(() => {
+        setBlockTimeLeft(blockTimeLeft => blockTimeLeft > 0 ? blockTimeLeft - 1 : 0);
+      }, 1000);
+
+      setDebounce(true);
+    }
+  });
+
 
   function handleIgnoreButton() {
     if (isBlocking) {
@@ -141,10 +182,10 @@ export default function OptionsPage() {
     if (!websiteToIgnore || websiteToIgnore.length <= 0 || ignoreDisplay.includes(websiteToIgnore)) {
       return;
     }
-
-    //TODO: ACTUALLY SAVE THE WEBSITES THAT ARE ADDED
     
     setIgnoreDisplay(ignoreDisplay.concat(websiteToIgnore));
+
+    chrome.storage.local.set({'ignoreList': ignoreDisplay});
 
     ignoreInput.value = '';
   }
@@ -190,7 +231,7 @@ export default function OptionsPage() {
       <WebsiteList ignoreDisplay={ignoreDisplay} setIgnoreDisplay={setIgnoreDisplay} isBlocking={isBlocking} />
     </div>
 
-    <BlockingDiv isBlocking={isBlocking} setIsBlocking={setIsBlocking} />
+    <BlockingDiv isBlocking={isBlocking} setIsBlocking={setIsBlocking} setBlockTimeLeft={setBlockTimeLeft} blockTimeLeft={blockTimeLeft}  />
 
   </main></>)
 }
