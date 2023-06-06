@@ -37,3 +37,8 @@
 .button:active {
     box-shadow: none;
 }
+
+.button:disabled {
+    box-shadow: none;
+    cursor: not-allowed;
+}

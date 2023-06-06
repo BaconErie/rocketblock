@@ -6,10 +6,12 @@ const openSans = Open_Sans({
   subsets: [ 'latin' ]
 })
 
-export default function PrimaryButton({ onClick, children }) {
+export default function PrimaryButton({ onClick, children, disabled }) {
+  let overlay = disabled ? null : (<span className={styles.overlay}></span>)
+
   return (<>
-    <button onClick={onClick} className={styles.button} style={openSans.style}>
-      <span className={styles.overlay}></span>
+    <button onClick={onClick} className={styles.button} style={openSans.style} disabled={disabled}>
+      {overlay}
       {children}
     </button>
   </>)

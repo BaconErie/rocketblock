@@ -56,6 +56,10 @@
     flex-grow: 1;
 }
 
+.inputBox:disabled {
+    cursor: not-allowed;
+}
+
 .inputButton {
     width: 10rem;
 }
