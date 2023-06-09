@@ -101,8 +101,8 @@ function BlockingDiv({ isBlocking, setIsBlocking, blockTimeLeft, setBlockTimeLef
       setBlockTimeLeft(totalSeconds);
       setIsBlocking(true);
 
-      chrome.storage.local.set({'blockTimeLeft': blockTimeLeft});
-      chrome.storage.local.set({'isBlocking': isBlocking});
+      // chrome.storage.local.set({'blockTimeLeft': blockTimeLeft});
+      // chrome.storage.local.set({'isBlocking': isBlocking});
 
       alert('Blocking has started!')
     }
@@ -147,19 +147,19 @@ export default function OptionsPage() {
   useEffect(() => {
     if (!debounce) {
       // Set whether or not it is blocking
-      chrome.storage.local.get(['isBlocking']).then((result) => {
-        setIsBlocking(result.isBlocking);
-      });
+      // chrome.storage.local.get(['isBlocking']).then((result) => {
+      //   setIsBlocking(result.isBlocking);
+      // });
 
       // Set block time left
-      chrome.storage.local.get(['blockTimeLeft']).then((result) => {
-        setBlockTimeLeft(result.blockTimeLeft)
-      });
+      // chrome.storage.local.get(['blockTimeLeft']).then((result) => {
+      //   setBlockTimeLeft(result.blockTimeLeft)
+      // });
 
       // Set ignoreDisplay
-      chrome.storage.local.get(['ignoreList']).then((result) => {
-        setIgnoreDisplay(result.ignoreList);
-      });
+      // chrome.storage.local.get(['ignoreList']).then((result) => {
+      //   setIgnoreDisplay(result.ignoreList);
+      // });
 
       setInterval(() => {
         setBlockTimeLeft(blockTimeLeft => blockTimeLeft > 0 ? blockTimeLeft - 1 : 0);
@@ -185,7 +185,7 @@ export default function OptionsPage() {
     
     setIgnoreDisplay(ignoreDisplay.concat(websiteToIgnore));
 
-    chrome.storage.local.set({'ignoreList': ignoreDisplay});
+    // chrome.storage.local.set({'ignoreList': ignoreDisplay});
 
     ignoreInput.value = '';
   }
