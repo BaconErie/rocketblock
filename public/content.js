@@ -57,4 +57,4 @@ function logStorageChange(changes, _) {
   }
 }
 
-chrome.storage.onChanged()
+chrome.storage.onChanged(logStorageChange);
