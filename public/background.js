@@ -1,4 +1,4 @@
-chrome.storage.onChange((changes, _) => {
+chrome.storage.onChanged.addListener((changes, _) => {
   // Get the end time, then set an alarm to turn off blocking later
 
   if ('isBlocking' in changes && changes.isBlocking.newValue == true) {
