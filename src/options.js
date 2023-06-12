@@ -123,7 +123,7 @@ function BlockingDiv({ isBlocking, setIsBlocking, blockTimeLeft, setBlockTimeLef
       setIsBlocking(true);
 
       chrome.storage.local.set({'endBlockTime': Date.now() + totalSeconds * 1000});
-      chrome.storage.local.set({'isBlocking': isBlocking});
+      chrome.storage.local.set({'isBlocking': true});
 
       //TODO: UH TELL THE BACKGROUND SCRIPT TO LIKE START THE TIMER
 
@@ -174,12 +174,12 @@ function OptionsPage() {
 
       // Set block time left
       chrome.storage.local.get(['endBlockTime']).then((result) => {
-        setBlockTimeLeft( parseInt((result.endBlockTime - Date.time())/1000) )
+        setBlockTimeLeft( parseInt((result.endBlockTime - Date.now())/1000) )
       });
 
       // Set ignoreDisplay
       chrome.storage.local.get(['ignoreList']).then((result) => {
-        setIgnoreDisplay(result.ignoreList);
+        setIgnoreDisplay(result.ignoreList ? result.ignoreList : []);
       });
 
       setInterval(() => {
@@ -244,8 +244,8 @@ function OptionsPage() {
 
       <p>Notes:</p>
       <ul className="ul">
-          <li>Leave on the http:// or https:// to block only that page</li>
-          <li>Remove the http part to block the entire domain/website</li>
+          <li>Leave on the http:// or https:// to ignore only that page</li>
+          <li>Remove the http part to ignore the entire domain/website</li>
           <li>Use * as a placeholder/wildcard</li>
       </ul>
 

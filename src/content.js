@@ -36,7 +36,7 @@ function logStorageChange(changes, _) {
     const isBlocking = changes.isBlocking.newValue;
 
     if (isBlocking) {
-      chrome.storage.get(['ignoreList']).then((result) => {
+      chrome.storage.local.get(['ignoreList']).then((result) => {
         if (!matchesRules(result.ignoreList, window.location.href)) {
           document.documentElement.innerHTML = '';
         }
@@ -47,7 +47,7 @@ function logStorageChange(changes, _) {
   if ('ignoreList' in changes) {
     const ignoreList = changes.ignoreList.newValue;
 
-    chrome.storage.get(['isBlocking']).then((result) => {
+    chrome.storage.local.get(['isBlocking']).then((result) => {
       if (result.isBlocking) {
         if (!matchesRules(ignoreList, window.location.href)) {
           document.documentElement.innerHTML = '';
@@ -57,4 +57,16 @@ function logStorageChange(changes, _) {
   }
 }
 
-chrome.storage.onChanged(logStorageChange);
+chrome.storage.onChanged.addListener(logStorageChange);
+
+// Check whether blocking is on when the page loads
+
+chrome.storage.local.get(['isBlocking']).then((result) => {
+    if (result.isBlocking) {
+      chrome.storage.local.get(['ignoreList']).then((result) => {
+        if (!matchesRules(result.ignoreList, window.location.href)) {
+          document.documentElement.innerHTML = '';
+        }
+      });
+    }
+  });

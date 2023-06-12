@@ -6,7 +6,7 @@ chrome.storage.onChanged.addListener((changes, _) => {
       const endBlockTime = result.endBlockTime;
 
       chrome.alarms.create('blockEnds', {
-        when: endTime
+        when: endBlockTime
       });
     });
   }
