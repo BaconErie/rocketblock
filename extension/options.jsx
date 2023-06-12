@@ -1,17 +1,5 @@
-'use client'; // Allows us to use event handlers. Doesn't matter if it's client or server components, this is all going to compiled to client anyway
-
-import { useState, useEffect } from 'react';
-
-import styles from './options.module.css';
-import { Open_Sans } from 'next/font/google';
-
-import PrimaryButton from '../../components/PrimaryButton/PrimaryButton';
-import WebsiteDisplay from '../../components/WebsiteDisplay/WebsiteDisplay';
-
-const openSans = Open_Sans({
-  weight: '500',
-  subsets: [ 'latin' ]
-})
+const useState = React.useState;
+const useEffect = React.useEffect;
 
 let debounce = false;
 
@@ -21,6 +9,39 @@ function getTimeFromSeconds(totalSeconds) {
   const seconds = totalSeconds - hours * 3600 - minutes * 60;
 
   return [ hours, minutes, seconds ]
+}
+
+function PrimaryButton({ onClick, children, disabled }) {
+  let overlay = disabled ? null : (<span className="overlay"></span>)
+
+  return (<>
+    <button onClick={onClick} className="button" disabled={disabled}>
+      {overlay}
+      {children}
+    </button>
+  </>)
+}
+
+function SurfaceButton({ onClick, children, className }) {
+  const stylesToUse = className ? `surfaceButton ${className}` : "surfaceButton";
+
+  return (<>
+
+    <button onClick={onClick} className={stylesToUse}>
+      <span className="surfaceOverlay"></span>
+      {children}
+    </button>
+  </>)
+}
+
+function WebsiteDisplay({ website, handleRemove }) {
+
+  return (<>
+    <div className="mainDisplay">
+      <SurfaceButton onClick={() => handleRemove(website)}>x</SurfaceButton>
+      <span className="span">{website}</span>
+    </div>
+  </>)
 }
 
 function WebsiteList({ ignoreDisplay, setIgnoreDisplay, isBlocking }) {
@@ -49,7 +70,7 @@ function WebsiteList({ ignoreDisplay, setIgnoreDisplay, isBlocking }) {
 
   if (ignoreDisplay.length == 0) {
     return (<>
-      <div className={`${styles.websiteList} ${styles.blankList}`}>
+      <div className="websiteList blankList">
         No websites to ignore added
       </div>
     </>)
@@ -60,7 +81,7 @@ function WebsiteList({ ignoreDisplay, setIgnoreDisplay, isBlocking }) {
   );
 
   return (<>
-    <div className={styles.websiteList}>
+    <div className="websiteList">
       {listItems}
     </div>
   </>);
@@ -115,9 +136,9 @@ function BlockingDiv({ isBlocking, setIsBlocking, blockTimeLeft, setBlockTimeLef
       <div>
         <h1>Start blocking</h1>
 
-        <h2>Block for <input id="hrs" type="number" style={openSans.style} className={styles.number} placeholder="hrs" /> : <input id="min" type="number" style={openSans.style} className={styles.number} placeholder="min" /> : <input id="sec" type="number" style={openSans.style} className={styles.number} placeholder="sec" /></h2>
+        <h2>Block for <input id="hrs" type="number" className="number" placeholder="hrs" /> : <input id="min" type="number" className="number" placeholder="min" /> : <input id="sec" type="number" className="number" placeholder="sec" /></h2>
         
-        <PrimaryButton className={styles.blockButton} onClick={handleStartBlocking}>Start Blocking</PrimaryButton>
+        <PrimaryButton className="number" onClick={handleStartBlocking}>Start Blocking</PrimaryButton>
 
       </div>
     </>)
@@ -138,9 +159,7 @@ function BlockingDiv({ isBlocking, setIsBlocking, blockTimeLeft, setBlockTimeLef
 }
 
 
-
-
-export default function OptionsPage() {
+function OptionsPage() {
   const [ignoreDisplay, setIgnoreDisplay] = useState([]);
   const [ isBlocking, setIsBlocking ] = useState(false);
   const [ blockTimeLeft, setBlockTimeLeft ] = useState(0);
@@ -207,24 +226,24 @@ export default function OptionsPage() {
     placeholder = 'Add a website to ignore';
   }
 
-  return (<><main className={styles.main}>
+  return (<><main className="main">
     <div>
-      <h1><span className={styles.yellow}>RocketBlock</span> Settings</h1>
+      <h1><span className="yellow">RocketBlock</span> Settings</h1>
     </div>
 
-    <div className={styles.content}>
+    <div className="content">
       <h1>Ignore list</h1>
 
       <br />
       
-      <div className={styles.inputWrapper}>
-        <input id="ignoreInput" className={styles.inputBox} style={openSans.style} type="text" placeholder={placeholder} onKeyUp={(e) => {if(e.key == 'Enter'){handleIgnoreButton(e)}}} disabled={disabled}/>
+      <div className="inputWrapper">
+        <input id="ignoreInput" className="inputBox" type="text" placeholder={placeholder} onKeyUp={(e) => {if(e.key == 'Enter'){handleIgnoreButton(e)}}} disabled={disabled}/>
 
         <PrimaryButton onClick={handleIgnoreButton} disabled={disabled}>Ignore</PrimaryButton>
       </div>
 
       <p>Notes:</p>
-      <ul className={styles.ul}>
+      <ul className="ul">
           <li>Leave on the http:// or https:// to block only that page</li>
           <li>Remove the http part to block the entire domain/website</li>
           <li>Use * as a placeholder/wildcard</li>
@@ -237,3 +256,6 @@ export default function OptionsPage() {
 
   </main></>)
 }
+
+const app = document.getElementById('app');
+ReactDOM.render(<OptionsPage />, app);
