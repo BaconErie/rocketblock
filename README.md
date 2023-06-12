@@ -2,6 +2,21 @@
 
 Anti-procrastination extension.
 
+# How to install
+
+- Download the dist folder
+- Go to chrome://extensions
+- Toggle the developer mode switch at the top right
+- Select "Load Unpacked"
+- Load the dist folder
+
+# How to use
+
+- Go to the options page of the extension (Go to chrome://extensions, click "Details" on RocketBlock, click on "Site Settings")
+- On that page, you can add websites to ignore, and then select how much time you want to block. Select the "Start Blocking" button to start blocking.
+
+# Code layout
+
 /src contains source code
 /dist contains built code that is ready for distribution
 
