@@ -1,7 +1,7 @@
 {
     "name": "RocketBlock",
     "manifest_version": 3,
-    "version": "1.0",
+    "version": "0.1",
     "description": "Strict anti-procrastination extension",
 
     "options_page": "options.html",
