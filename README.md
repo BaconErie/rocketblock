@@ -30,6 +30,13 @@ To build:
 
 You will need to comment out all the lines that reference the chrome extension API during development. Remember to uncomment them during build.
 
+# Technology stack
+
+- Javascript as the language
+- React.js as the UI library for the options page
+- Babel.js to convert the React code into something browser readable
+- Chrome Extension API to actually do stuff with the browser 
+
 # Roadmap
 
 idk first I will need to make the build process easier
