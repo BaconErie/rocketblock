@@ -65,7 +65,7 @@ function WebsiteList({ ignoreDisplay, setIgnoreDisplay, isBlocking }) {
 
     setIgnoreDisplay(newIgnoreDisplay);
 
-    chrome.storage.local.set({'ignoreList': ignoreDisplay});
+    chrome.storage.local.set({'ignoreList': newIgnoreDisplay});
   }
 
   if (ignoreDisplay.length == 0) {
@@ -204,9 +204,11 @@ function OptionsPage() {
       return;
     }
     
-    setIgnoreDisplay(ignoreDisplay.concat(websiteToIgnore));
+    const newIgnoreDisplay = ignoreDisplay.concat(websiteToIgnore)
 
-    chrome.storage.local.set({'ignoreList': ignoreDisplay});
+    setIgnoreDisplay(newIgnoreDisplay);
+
+    chrome.storage.local.set({'ignoreList': newIgnoreDisplay});
 
     ignoreInput.value = '';
   }

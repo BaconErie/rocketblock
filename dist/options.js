@@ -65,7 +65,7 @@ function WebsiteList({
     }
     setIgnoreDisplay(newIgnoreDisplay);
     chrome.storage.local.set({
-      'ignoreList': ignoreDisplay
+      'ignoreList': newIgnoreDisplay
     });
   }
   if (ignoreDisplay.length == 0) {
@@ -185,9 +185,10 @@ function OptionsPage() {
     if (!websiteToIgnore || websiteToIgnore.length <= 0 || ignoreDisplay.includes(websiteToIgnore)) {
       return;
     }
-    setIgnoreDisplay(ignoreDisplay.concat(websiteToIgnore));
+    const newIgnoreDisplay = ignoreDisplay.concat(websiteToIgnore);
+    setIgnoreDisplay(newIgnoreDisplay);
     chrome.storage.local.set({
-      'ignoreList': ignoreDisplay
+      'ignoreList': newIgnoreDisplay
     });
     ignoreInput.value = '';
   }

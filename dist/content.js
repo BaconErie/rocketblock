@@ -13,7 +13,7 @@ function matchWildcard(rule, input) {
   
     return true;
   }
-  
+
 function matchesRules(rules, href) {
 
   for (const rule of rules) {
@@ -64,8 +64,6 @@ chrome.storage.onChanged.addListener(logStorageChange);
 chrome.storage.local.get(['isBlocking']).then((result) => {
     if (result.isBlocking) {
       chrome.storage.local.get(['ignoreList']).then((result) => {
-        
-        console.log(matchesRules(result.ignoreList, window.location.href), result.ignoreList, window.location.href);
 
         if (!matchesRules(result.ignoreList, window.location.href)) {
           document.documentElement.innerHTML = '';
