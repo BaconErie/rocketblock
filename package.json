@@ -1,11 +1,21 @@
 {
-  "devDependencies": {
-    "@babel/cli": "^7.22.5",
-    "@babel/core": "^7.22.5"
+  "name": "rocketblock",
+  "version": "1.0.0",
+  "description": "Anti-procrastination extension.",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "babel-preset-react": "^6.24.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "babel-loader": "^9.1.2",
+    "html-webpack-plugin": "^5.5.3",
+    "webpack": "^5.86.0"
   }
 }
