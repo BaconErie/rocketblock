@@ -17,8 +17,8 @@ Anti-procrastination extension.
 
 # Code layout
 
-/src contains source code
-/dist contains built code that is ready for distribution
+`/src` contains source code
+`/dist` contains built code that is ready for distribution
 
 # How to build and get the extension ready for distribution
 
