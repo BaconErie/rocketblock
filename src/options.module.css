@@ -1,0 +1,84 @@
+.Options_yellow {
+    color: #f9d83f;
+}
+
+.Options_main {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.Options_ul {
+    margin: 0px;
+}
+
+.Options_websiteList {
+    display: flex;
+    flex-direction: column;
+
+    padding: 0px;
+    border-radius: 10px;
+    background-color: #272727;
+
+    box-sizing: border-box;
+    border: solid;
+    border-width: 1px;
+    border-color: #999999;
+
+    color: #ffffff;
+    
+    box-shadow: none;
+
+    margin-top: 1rem;
+    
+    flex-grow: 1;
+
+    min-height: 12rem;
+    overflow: clip;
+
+    row-gap: 0px;
+}
+
+.Options_blankList {
+    padding-top: 3rem;
+    text-align: center;
+}
+
+.Options_inputWrapper {
+    all: initial;
+    padding: 0px;
+
+    display: flex;
+    column-gap: 1rem;
+}
+
+.Options_inputBox {
+    flex-grow: 1;
+}
+
+.Options_inputBox:disabled {
+    cursor: not-allowed;
+}
+
+.Options_inputButton {
+    width: 10rem;
+}
+
+.Options_number {
+    display: inline-block;
+    margin: 0px;
+    max-width: 3rem;
+}
+
+/* Remove the arrows from the number box */
+.Options_number::-webkit-outer-spin-button,
+.Options_number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.Options_number[type=number] {
+  -moz-appearance: textfield;
+  text-align: center;
+}
