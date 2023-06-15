@@ -35,6 +35,8 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
+      title: 'RocketBlock Settings',
+      filename: 'options.html',
       template: './src/options/templates/options.html'
     })
   ],
