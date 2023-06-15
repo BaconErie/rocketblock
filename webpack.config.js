@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  entry: './src/options.js',
+  entry: './src/options/options.js',
 
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -25,7 +25,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-env', { targets: "defaults" }]
+              ['@babel/preset-react', { targets: "defaults" }]
             ]
           }
         }
@@ -35,7 +35,7 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/templates/index.html'
+      template: './src/options/templates/options.html'
     })
   ],
 };
