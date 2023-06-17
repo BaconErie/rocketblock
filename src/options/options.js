@@ -160,6 +160,13 @@ export default function OptionsPage() {
         setIgnoreDisplay(result.ignoreList ? result.ignoreList : []);
       });
 
+      // Listen for changes to isBlocking and update accordingly
+      chrome.storage.onChanged.addListener((changes, _) => {
+        if ('isBlocking' in changes ) {
+          setIsBlocking(changes.isBlocking.newValue);
+        }
+      });
+
       setInterval(() => {
         setBlockTimeLeft(blockTimeLeft => blockTimeLeft > 0 ? blockTimeLeft - 1 : 0);
       }, 1000);

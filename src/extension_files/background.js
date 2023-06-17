@@ -13,7 +13,6 @@ chrome.storage.onChanged.addListener((changes, _) => {
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
-  console.log(alarm);
   if (alarm.name == 'blockEnds') {
     chrome.storage.local.set({'isBlocking': false});
   }
