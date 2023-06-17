@@ -15,7 +15,6 @@ chrome.storage.onChanged.addListener((changes, _) => {
 chrome.alarms.onAlarm.addListener((alarm) => {
   console.log(alarm);
   if (alarm.name == 'blockEnds') {
-    console.log('this should work')
     chrome.storage.local.set({'isBlocking': false});
   }
 })
