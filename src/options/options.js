@@ -106,8 +106,6 @@ function BlockingDiv({ isBlocking, setIsBlocking, blockTimeLeft, setBlockTimeLef
       chrome.storage.local.set({'endBlockTime': Date.now() + totalSeconds * 1000});
       chrome.storage.local.set({'isBlocking': true});
 
-      //TODO: UH TELL THE BACKGROUND SCRIPT TO LIKE START THE TIMER
-
       alert('Blocking has started!')
     }
   }
