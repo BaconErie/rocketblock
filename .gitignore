@@ -37,3 +37,4 @@ next-env.d.ts
 # build files
 /rocketblock-extension
 *.crx
+/dist

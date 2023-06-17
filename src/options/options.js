@@ -6,6 +6,7 @@ import styles from './options.module.css';
 import './global.css';
 
 import PrimaryButton from './components/PrimaryButton/PrimaryButton';
+import SurfaceButton from './components/SurfaceButton/SurfaceButton';
 
 let debounce = false;
 
