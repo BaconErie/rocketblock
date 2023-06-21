@@ -28,7 +28,7 @@
 
     "icons": {
         "16": "rocektblock16.png",
-        "32": "rocketblock32.png"
+        "32": "rocketblock32.png",
         "48": "rocketblock48.png",
         "128": "rocketblock128.png"
     }
