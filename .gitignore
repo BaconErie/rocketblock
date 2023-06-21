@@ -35,6 +35,5 @@ yarn-error.log*
 next-env.d.ts
 
 # build files
-/rocketblock-extension
+/rocketblock-dist
 *.crx
-/dist

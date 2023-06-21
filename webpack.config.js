@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/options/options.js',
 
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './rocketblock-dist'),
     filename: 'options_bundle.js',
   },
 
