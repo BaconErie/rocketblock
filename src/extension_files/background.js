@@ -76,7 +76,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 });
 
 
-chrome.tabs.onUpdate.addListener((_, _, tab) => {
+chrome.tabs.onUpdate.addListener((_, __, tab) => {
 
   chrome.storage.local.get(['isBlocking']).then((result) => {
     if (result.isBlocking && !matchesRules(tab.url)) {
@@ -87,7 +87,7 @@ chrome.tabs.onUpdate.addListener((_, _, tab) => {
 });
 
 
-chrome.tabs.onCreated.addListener((_, _, tab) => {
+chrome.tabs.onCreated.addListener((_, __, tab) => {
 
   chrome.storage.local.get(['isBlocking']).then((result) => {
     if (result.isBlocking && !matchesRules(tab.url)) {
