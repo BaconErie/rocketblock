@@ -13,11 +13,7 @@
     "permissions": [
         "storage",
         "alarms",
-        "scripting"
-    ],
-
-    "host_permissions": [
-        "<all_urls>"
+        "tabs"
     ],
 
     "content_security_policy": {
