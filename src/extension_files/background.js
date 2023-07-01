@@ -5,6 +5,15 @@ When to check if tabs are distracting:
 - When a new tab is created (check one tab, also make sure to listen for URL changes)
 */
 
+var afterBlockUrl = 'about:blank';
+
+async function getIgnoreListRules() {
+  /* Retrieves the rules from the database. Returns a list of strings which are the rules. */
+
+  const result = await chrome.storage.local.get(['ignoreList']);
+  return result.ignoreList;
+}
+
 function matchWildcard(rule, input) {
   const ruleList = rule.split('*');
 
@@ -24,15 +33,17 @@ function matchWildcard(rule, input) {
 function matchesRules(rules, href) {
 
   for (const rule of rules) {
+
     if (rule.includes('*') && matchWildcard(rule, href)) {
       return true;
 
-    } else if ( (rule.includes('http://') || rule.includes('https://')) && rule == href) {
+    } else if ((rule.includes('http://') || rule.includes('https://')) && rule == href) {
       return true;
 
     } else if (new URL(href).hostname == rule) {
       return true;
     }
+
   }
 
   return false;
@@ -54,13 +65,15 @@ chrome.storage.onChanged.addListener((changes, _) => {
       });
     });
 
-    
+
     // Loop through all tabs and check if any of them don't match whitelist
     chrome.tabs.query({}, (tabs) => {
       for (let tab of tabs) {
-        if (!matchesRules(tab.url)) {
-          chrome.tab.update({tabId: tab.id, updateProperties: {url: 'about:blank'}});
-        }
+        getIgnoreListRules().then(ignoreList => {
+          if (!matchesRules(ignoreList, tab.url) && tab.url != afterBlockUrl && !tab.url.startsWith('chrome-extension://')) {
+            chrome.tabs.update(tab.id, { url: afterBlockUrl });
+          }
+        })
       }
     });
 
@@ -69,9 +82,9 @@ chrome.storage.onChanged.addListener((changes, _) => {
 
 chrome.alarms.onAlarm.addListener((alarm) => {
 
-    if (alarm.name == 'blockEnds') {
-      chrome.storage.local.set({'isBlocking': false});
-    }
+  if (alarm.name == 'blockEnds') {
+    chrome.storage.local.set({ 'isBlocking': false });
+  }
 
 });
 
@@ -79,9 +92,11 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 chrome.tabs.onUpdated.addListener((_, __, tab) => {
 
   chrome.storage.local.get(['isBlocking']).then((result) => {
-    if (result.isBlocking && !matchesRules(tab.url)) {
-      chrome.tab.update({tabId: tab.id, updateProperties: {url: 'about:blank'}});
-    }
+    getIgnoreListRules().then(ignoreList => {
+      if (result.isBlocking && !matchesRules(ignoreList, tab.url) && tab.url != afterBlockUrl && !tab.url.startsWith('chrome-extension://')) {
+        chrome.tabs.update(tab.id, { url: afterBlockUrl });
+      }
+    })
   })
 
 });
@@ -90,9 +105,11 @@ chrome.tabs.onUpdated.addListener((_, __, tab) => {
 chrome.tabs.onCreated.addListener((_, __, tab) => {
 
   chrome.storage.local.get(['isBlocking']).then((result) => {
-    if (result.isBlocking && !matchesRules(tab.url)) {
-      chrome.tab.update({tabId: tab.id, updateProperties: {url: 'about:blank'}});
-    }
-  })
-  
+    getIgnoreListRules().then(ignoreList => {
+      if (result.isBlocking && !matchesRules(ignoreList, tab.url) && tab.url != afterBlockUrl && !tab.url.startsWith('chrome-extension://')) {
+        chrome.tabs.update(tab.id, { url: afterBlockUrl });
+      }
+    })
+  });
+
 });
