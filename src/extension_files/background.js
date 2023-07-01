@@ -76,7 +76,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 });
 
 
-chrome.tabs.onUpdate.addListener((_, __, tab) => {
+chrome.tabs.onUpdated.addListener((_, __, tab) => {
 
   chrome.storage.local.get(['isBlocking']).then((result) => {
     if (result.isBlocking && !matchesRules(tab.url)) {
